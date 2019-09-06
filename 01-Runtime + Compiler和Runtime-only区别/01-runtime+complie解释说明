@@ -1,0 +1,26 @@
+main.js 入口函数的这个Vue实例的不同:
+
+      new Vue({
+            el: '#app',
+            components: { App },
+            template: '<App/>'
+      })
+            // runtime+compiler  
+            // template  -->  ast  -->  render  -->  virtual dom  --> UI
+            
+            // 但是呢,这个里面其实也是可以直接改的
+            new Vue({
+                  el: '#app',
+                  // components: { App },
+                  // template: '<App/>'
+                  render: function (createElement) {
+                        // 1. 普通用法: createElement('标签', {标签的属性}, ['内容'])
+                        // 1. 直接替换到 el:'#app'
+                              return createElement(
+                                    'h2',
+                                    {class: 'box'},
+                                    ['Hello World', createElement('button', ['按钮'])])
+                        // 2. 传入组件对象:
+                              return createElement(App)
+                  }
+            })

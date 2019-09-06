@@ -1,0 +1,12 @@
+main.js 入口函数的这个Vue实例的不同: 工作中大多数选择 runtime-only 
+
+    new Vue({
+      el: '#app',
+      render: h => h(App)
+    })
+        // runtime-only 1.性能更高  2.代码量更少
+
+        // 那么...vue文件中的 template 是由谁处理的了?
+        //   是由 vue-template-compiler 这个开发依赖来处理的
+        // render  -->  virtual dom  --> UI
+        

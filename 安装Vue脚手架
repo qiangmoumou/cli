@@ -1,0 +1,76 @@
+1. 安装脚手架
+  1. npm i -g @vue/cli       // 安装最新的脚手架 (cli-3)
+  2. npm i -g @vue/cli-init       // 拉取 2.x 模板(旧版本)  2.x 和 3.x 就都能用了
+  3. vue init webpack my-project      // Vue Cli2初始化项目
+  4. vue create my-project      // Vue Cli3初始化项目
+    * 解决不能安装脚手架问题: 找到 C:\Users\Administrator\AppData\Roaming 找到 npm-cache文件夹 删掉, 然后再去执行安装脚手架就行了 *
+
+
+2. Vue Cli2初始化项目
+  1. vue init webpack my-project
+      ? Project name (my-project)        // 要你给项目起一个名字,刚初始化项目时候起的名字是 文件夹的 名字    // 直接敲回车 就是默认和文件夹的名字一样 ,  (我这里不小心起成 y 名字了)
+      ? Project description (A Vue.js project)      // 项目描述       // 随便写   // 我这里 写 test vue cli2
+      ? Author (qiangmoumou <1092157587@qq.com>)      // 作者       // 默认是git里面的作者,因为它会读取全局配置的 git 里面的信息
+      Vue build (Use arrow keys)          // 问你要用什么构建项目,下面有两个选项
+      1) Runtime + Compiler: recommended for most users      //  先选择这个
+      2) Runtime-only: about 6KB lighter min+gzip, but templates (or any Vue-specific HTML) are ONLY allowed in .vue files - render functions are required elsewhere
+
+        1) Vue build standalone    // 选择了项目 1)
+        1) Install vue-router? (Y/n) Y    // 是否安装 路由 Y
+        1) Use ESLint to lint your code? (Y/n)      // 检查你代码是否写的规范  Y 和 n 都行  Y 可能会限制了你的代码习惯    // 选了 Y 就会在下面给你提供两个规范选项
+            Standard (https://github.com/standard/standard)
+            Airbnb (https://github.com/airbnb/javascript)
+              1. ESLint   ==>  Standard: 选择了标准的书写代码太难受了, 1函数没有书写间隔没有空格不行, 2函数申明了不用也报错, 3最后一行没有换行也报错
+              2. 我不想用 ESLint 的代码规范了,太麻烦了,怎么关掉?
+                    找到 config 里面的 index.js  26行 useEslint: true, 改成  false
+        1) Set uup unit tests (Y/n)       // 单元测试   // 暂时 n , 用的少 
+        1) Setup e2e tests with Nightwatch? (Y/n)      // 端到端 测试  依赖于 Nightwatch    // 这个一般是测试人员去写的   所以 n
+        1) Should we run 'npm install' for you after the project has been created (recommended) (Use arrow keys)      // 你以后是用 npm 管理项目呢 , 还是用 Yarn 管理   // 我用 npm
+
+
+2. Vue Cli3初始化项目    vue-cli3 与 2 版本有很大区别
+    vue-cli3 是基于 webpack4 打造, vue-cli2 还是 webpack3
+    vue-cli3 的设计原则是 '0配置', 移除的配置文件根目录下的, build 和 config 等目录
+    vue-cli3 提供了 vue ui 命令, 提供了可视化配置, 更加人性化
+    移除了 static 文件夹, 新增了 public 文件夹, 并且 index.html 移动到了 public 中
+  1. vue create my-project
+      ?Please pick a preset: (Use arrow keys)     // 有以下两个配置选择
+        default (bable, eslint)     // 默认配置
+        Manually select features    // 手动的选择特性   // 这里选择手动 // 会有一堆的选项,按下空格可以选择或者取消
+        ?Use history mode for router? (Requires proper server setup for index fallback in production) (Y/n)   如果安装了路由就会问--- //路由器使用历史模式?   // 我不清楚,所以先选择 n 
+      ?Where do you prefer placing config for Babel, PostCss, ESLint, etc.?(Use arrow keys)       //你更喜欢把Babel, PostCss, ESLint等配置放在哪里?  提供以下两个选项
+        In dedicated config files     // 在专用配置文件中     // 在这选择这个独立的   
+        In package.json     // 在 package.json 中
+      ?Save this as a preset for future projects? (Y/n)     // 把这个作为将来项目的预置?(Y / n) Y  // 相当于记忆以上操作以后直接选  在第一步的时候会多了一个选项  ?Please pick a preset: (Use arrow keys)   // coderwhy
+      ?Save preset as:  // 保存预置为什么名字,随便起      // coderwhy
+
+
+3. cli2 目录解析
+  1. build          // cli3的webpack.config.js的代码都拆分开放到了这个文件中 和 发布最终项目代码的
+  2. config         // 也是webpack的相关配置文件
+  3. node_modules   // 依赖项
+  4. src            // 写代码的
+  5. static         // 静态的东西,原封不动的复制到 dist 文件夹里
+  6. .babelrc       // ES代码相关转化配置
+  7. editorconfig   // 项目文本相关配置
+  8. .gitignore     // Git仓库忽略的文件夹配置
+  9. postcssrc.js   // CSS相关转化的配置
+
+
+3. cli3 目录解析
+  1. public         // 静态的东西,到时候会原封不动,名字都不改的复制到 dist 文件夹里
+  2. src            // 写代码的
+  3. .browserslistrc// 控制的适配规则的
+  4. .gitignore     // 忽略文件
+  5. babel.config.js// 配置 babel 相关文件
+
+
+4. cli3 因为是 0 配置,所以有时候我们想改配置无从下手:  掌握Cli3 配置文件的查看和修改
+  方案一: UI 方面的配置:
+          启动配置服务器: vue ui
+            在终端敲 vue ui 启动一个 vue 本地服务器  会自动打开一个 可视化的 Vue项目管理器
+  方案二: 在 node_modules 下的 @vue 下的 cli-service 有一个 webpack.config.js 这个配置文件有点少, 但是它又指向了 当前目录下的 lib 里面有 config 下的 一些配置文件
+  方案三: 在项目的根目录下 创建一个 vue.config.js(固定的名字) 的文件  但是它是绿色的,因为没有加入到 git 的本地仓库里面, 执行  git add . 再执行 git commit -m '添加一个配置文件'   把这个新创建的文件添加到本地仓库里就哦了
+          module.exports = {    // 这里写的配置会和它默认的配置进行合并
+
+          }
